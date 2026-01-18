@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="account.cpp" />
+    <ClCompile Include="characters.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Online_Star_Rail.cpp" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="account.h" />
+    <ClInclude Include="characters.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>
