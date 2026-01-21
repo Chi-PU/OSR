@@ -11,7 +11,7 @@ using namespace std;
 		std::cout << "Press any key to begin game" << std::endl;
 		std::cin.get();
 		std::cout << "Connecting to server..." << std::endl;
-		int status = connect();
+		int status = start_socket();
 		if (status == -1) {
 			std::cerr << "Failed to connect to server. Exiting game." << std::endl;
 			return -1;

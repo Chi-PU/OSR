@@ -2,11 +2,11 @@
 
 #include "log.h"
 
-void logEvent(const std::string& event) {
-	// In a real application, this would write to a log file or logging system
-	std::cout << "[LOG]: " << event << std::endl;
-}
-
-class Logger {
-	virtual void log(const std::string& message) {};
-};
+//void logEvent(const std::string& event) {
+//	// In a real application, this would write to a log file or logging system
+//	std::cout << "[LOG]: " << event << std::endl;
+//}
+//
+//class Logger {
+//	virtual void log(const std::string& message) {};
+//};
