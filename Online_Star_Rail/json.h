@@ -14,6 +14,9 @@ public:
     // Add string value
     void add(const std::string& key, const std::string& value);
 
+	//Add string value for const char*
+    void add(const std::string& key, const char* value);
+
     // Add integer value
     void add(const std::string& key, int value);
 

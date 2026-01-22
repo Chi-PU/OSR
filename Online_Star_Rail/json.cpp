@@ -19,9 +19,16 @@
         return result;
     }
 
+
+
     // Add string value
     void SimpleJSON::add(const std::string& key, const std::string& value) {
         data[key] = "\"" + escape_string(value) + "\"";
+    }
+
+	// Add string value for const char*
+    void SimpleJSON::add(const std::string& key, const char* value) {
+        data[key] = "\"" + escape_string(std::string(value)) + "\"";
     }
 
     // Add integer value
