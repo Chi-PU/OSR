@@ -7,3 +7,8 @@ public:
 		static void init();
 		static void close();
 };
+class Connestion {
+public:
+    Connestion();
+	~Connestion();
+};
