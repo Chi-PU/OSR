@@ -89,7 +89,7 @@ void Socket::send(const std::string& data) {
 
     // Send all data (may require multiple calls)
     while (total_sent < data_length) {
-        ssize_t bytes_sent = ::send(sock_,
+        size_t bytes_sent = ::send(sock_,
             data.c_str() + total_sent,
             data_length - total_sent,
             0);
@@ -118,7 +118,7 @@ std::string Socket::receive(size_t buffer_size) {
 
     std::string buffer(buffer_size, '\0');
 
-    ssize_t bytes_received = ::recv(sock_, &buffer[0], buffer_size, 0);
+    size_t bytes_received = ::recv(sock_, &buffer[0], buffer_size, 0);
 
     if (bytes_received < 0) {
 #if defined(_WIN32) || defined(_WIN64)
