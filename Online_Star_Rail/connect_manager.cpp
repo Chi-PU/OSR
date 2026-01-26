@@ -10,3 +10,7 @@ ConnectManager::ConnectManager()
 		 perror(e.what());
 	 }
 	}
+
+void doGameLoop() {
+	Socket sock;
+}

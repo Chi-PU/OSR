@@ -47,8 +47,8 @@ void Socket::connect(const std::string& host, int port) {
     struct addrinfo hints, * res, * p;
 
     memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_family = AF_UNSPEC;      // IPv4 or IPv6
+    hints.ai_socktype = SOCK_STREAM;  // TCP
 
     std::string port_str = std::to_string(port);
 
@@ -56,13 +56,14 @@ void Socket::connect(const std::string& host, int port) {
         throw std::runtime_error("getaddrinfo failed for " + host);
     }
 
-    // Try each address
+    // Try each address until we successfully connect
     for (p = res; p != NULL; p = p->ai_next) {
         sock_ = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
         if (sock_ == INVALID_SOCK) {
             continue;
         }
 
+        // Attempt connection (blocking)
         if (::connect(sock_, p->ai_addr, p->ai_addrlen) == 0) {
             break; // Success
         }
@@ -83,9 +84,30 @@ void Socket::send(const std::string& data) {
         throw std::runtime_error("Socket not connected");
     }
 
-    size_t bytes_sent = ::send(sock_, data.c_str(), data.length(), 0);
-    if (bytes_sent < 0) {
-        throw std::runtime_error("Send failed");
+    size_t total_sent = 0;
+    size_t data_length = data.length();
+
+    // Send all data (may require multiple calls)
+    while (total_sent < data_length) {
+        ssize_t bytes_sent = ::send(sock_,
+            data.c_str() + total_sent,
+            data_length - total_sent,
+            0);
+
+        if (bytes_sent < 0) {
+#if defined(_WIN32) || defined(_WIN64)
+            int error = WSAGetLastError();
+            throw std::runtime_error("Send failed with error: " + std::to_string(error));
+#else
+            throw std::runtime_error("Send failed: " + std::string(strerror(errno)));
+#endif
+        }
+
+        if (bytes_sent == 0) {
+            throw std::runtime_error("Connection closed by peer during send");
+        }
+
+        total_sent += bytes_sent;
     }
 }
 
@@ -95,10 +117,21 @@ std::string Socket::receive(size_t buffer_size) {
     }
 
     std::string buffer(buffer_size, '\0');
-    size_t bytes_received = ::recv(sock_, &buffer[0], buffer_size, 0);
+
+    ssize_t bytes_received = ::recv(sock_, &buffer[0], buffer_size, 0);
 
     if (bytes_received < 0) {
-        throw std::runtime_error("Receive failed");
+#if defined(_WIN32) || defined(_WIN64)
+        int error = WSAGetLastError();
+        throw std::runtime_error("Receive failed with error: " + std::to_string(error));
+#else
+        throw std::runtime_error("Receive failed: " + std::string(strerror(errno)));
+#endif
+    }
+
+    if (bytes_received == 0) {
+        // Connection closed gracefully by peer
+        return "";
     }
 
     buffer.resize(bytes_received);

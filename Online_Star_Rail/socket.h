@@ -1,4 +1,3 @@
-// socket.h
 #pragma once
 #include <string>
 #include <stdexcept>
@@ -22,20 +21,20 @@ typedef int socket_t;
 
 class Socket {
 public:
-    Socket();  // Constructor handles platform init
-    ~Socket(); // Destructor handles cleanup (RAII)
+    Socket();
+    ~Socket();
 
-    // Delete copy constructor and assignment (socket shouldn't be copied)
     Socket(const Socket&) = delete;
     Socket& operator=(const Socket&) = delete;
 
-    // Move constructor and assignment (allow moving)
     Socket(Socket&& other) noexcept;
     Socket& operator=(Socket&& other) noexcept;
 
+    // Simple blocking operations
     void connect(const std::string& host, int port);
     void send(const std::string& data);
     std::string receive(size_t buffer_size = 4096);
+
     bool is_connected() const { return sock_ != INVALID_SOCK; }
 
 private:
