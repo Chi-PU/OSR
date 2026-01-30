@@ -1,0 +1,40 @@
+syntax = "proto3";
+package osr;
+
+enum MessageType {
+  LOGIN = 0;
+  GACHA_PULL = 1;
+  GAME_ACTION = 2;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message GachaPullRequest {
+  int32 user_id = 1;
+  int32 pull_count = 2;
+}
+
+message GameActionRequest {
+  int32 user_id = 1;
+  int32 choice = 2;
+  int32 scenario_id = 3;
+}
+
+// Wrapper envelope
+message ClientMessage {
+  MessageType type = 1;
+  oneof payload {
+    LoginRequest login = 2;
+    GachaPullRequest gacha_pull = 3;
+    GameActionRequest game_action = 4;
+  }
+}
+
+message ServerResponse {
+  bool success = 1;
+  string message = 2;
+  int32 user_id = 3;  // returned on login success
+}
