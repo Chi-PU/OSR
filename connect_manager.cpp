@@ -7,11 +7,16 @@ namespace proto_helpers {
     std::string buildLoginRequest(const std::string& username, const std::string& password);
     std::string buildGachaPullRequest(int user_id, int pull_count);
     std::string buildChoiceRequest(int user_id, int choice, int scenario_id);
+    std::string buildTokenAuthRequest(const std::string& jwt_token);
 }
 
-ConnectManager::ConnectManager(const std::string& server_ip, int port) {
+ConnectManager::ConnectManager(const std::string& server_ip, int port,
+                               const std::string& ca_cert_path)
+    : ssl_ctx_(ca_cert_path) {
     try {
         sock_.connect(server_ip, port);
+        sock_.upgrade_to_tls(ssl_ctx_.get());
+        std::cout << "TLS connection established" << std::endl;
     }
     catch (const std::runtime_error& e) {
         std::cerr << "Connection failed: " << e.what() << std::endl;
@@ -67,5 +72,10 @@ void ConnectManager::sendGachaPull(int user_id, int pull_count) {
 
 void ConnectManager::sendChoice(int user_id, int choice, int scenario_id) {
     std::string data = proto_helpers::buildChoiceRequest(user_id, choice, scenario_id);
+    sendRaw(data);
+}
+
+void ConnectManager::sendTokenAuth(const std::string& jwt_token) {
+    std::string data = proto_helpers::buildTokenAuthRequest(jwt_token);
     sendRaw(data);
 }

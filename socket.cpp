@@ -1,5 +1,6 @@
 // socket.cpp
 #include "socket.h"
+#include <openssl/err.h>
 #include <iostream>
 #include <cstring>
 
@@ -7,7 +8,7 @@
 int Socket::wsa_instance_count_ = 0;
 #endif
 
-Socket::Socket() : sock_(INVALID_SOCK) {
+Socket::Socket() : sock_(INVALID_SOCK), ssl_(nullptr) {
 #if defined(_WIN32) || defined(_WIN64)
     if (wsa_instance_count_ == 0) {
         WSADATA wsaData;
@@ -30,15 +31,18 @@ Socket::~Socket() {
 #endif
 }
 
-Socket::Socket(Socket&& other) noexcept : sock_(other.sock_) {
+Socket::Socket(Socket&& other) noexcept : sock_(other.sock_), ssl_(other.ssl_) {
     other.sock_ = INVALID_SOCK;
+    other.ssl_ = nullptr;
 }
 
 Socket& Socket::operator=(Socket&& other) noexcept {
     if (this != &other) {
         close_socket();
         sock_ = other.sock_;
+        ssl_ = other.ssl_;
         other.sock_ = INVALID_SOCK;
+        other.ssl_ = nullptr;
     }
     return *this;
 }
@@ -79,6 +83,31 @@ void Socket::connect(const std::string& host, int port) {
     }
 }
 
+void Socket::upgrade_to_tls(SSL_CTX* ctx) {
+    if (sock_ == INVALID_SOCK) {
+        throw std::runtime_error("Cannot upgrade: socket not connected");
+    }
+    if (ssl_) {
+        throw std::runtime_error("TLS already active");
+    }
+
+    ssl_ = SSL_new(ctx);
+    if (!ssl_) {
+        throw std::runtime_error("SSL_new failed");
+    }
+
+    SSL_set_fd(ssl_, static_cast<int>(sock_));
+
+    int ret = SSL_connect(ssl_);
+    if (ret != 1) {
+        char buf[256];
+        ERR_error_string_n(ERR_get_error(), buf, sizeof(buf));
+        SSL_free(ssl_);
+        ssl_ = nullptr;
+        throw std::runtime_error(std::string("TLS handshake failed: ") + buf);
+    }
+}
+
 void Socket::send(const std::string& data) {
     if (sock_ == INVALID_SOCK) {
         throw std::runtime_error("Socket not connected");
@@ -87,24 +116,36 @@ void Socket::send(const std::string& data) {
     size_t total_sent = 0;
     size_t data_length = data.length();
 
-    // Send all data (may require multiple calls)
     while (total_sent < data_length) {
-        int bytes_sent = ::send(sock_,
-            data.c_str() + total_sent,
-            static_cast<int>(data_length - total_sent),
-            0);
+        int bytes_sent;
 
-        if (bytes_sent < 0) {
+        if (ssl_) {
+            bytes_sent = SSL_write(ssl_,
+                data.c_str() + total_sent,
+                static_cast<int>(data_length - total_sent));
+
+            if (bytes_sent <= 0) {
+                int err = SSL_get_error(ssl_, bytes_sent);
+                throw std::runtime_error("SSL_write failed, error code: " + std::to_string(err));
+            }
+        } else {
+            bytes_sent = ::send(sock_,
+                data.c_str() + total_sent,
+                static_cast<int>(data_length - total_sent),
+                0);
+
+            if (bytes_sent < 0) {
 #if defined(_WIN32) || defined(_WIN64)
-            int error = WSAGetLastError();
-            throw std::runtime_error("Send failed with error: " + std::to_string(error));
+                int error = WSAGetLastError();
+                throw std::runtime_error("Send failed with error: " + std::to_string(error));
 #else
-            throw std::runtime_error("Send failed: " + std::string(strerror(errno)));
+                throw std::runtime_error("Send failed: " + std::string(strerror(errno)));
 #endif
-        }
+            }
 
-        if (bytes_sent == 0) {
-            throw std::runtime_error("Connection closed by peer during send");
+            if (bytes_sent == 0) {
+                throw std::runtime_error("Connection closed by peer during send");
+            }
         }
 
         total_sent += bytes_sent;
@@ -117,21 +158,33 @@ std::string Socket::receive(size_t buffer_size) {
     }
 
     std::string buffer(buffer_size, '\0');
+    int bytes_received;
 
-    int bytes_received = ::recv(sock_, &buffer[0], static_cast<int>(buffer_size), 0);
+    if (ssl_) {
+        bytes_received = SSL_read(ssl_, &buffer[0], static_cast<int>(buffer_size));
 
-    if (bytes_received < 0) {
+        if (bytes_received <= 0) {
+            int err = SSL_get_error(ssl_, bytes_received);
+            if (err == SSL_ERROR_ZERO_RETURN) {
+                return ""; // Peer closed TLS connection gracefully
+            }
+            throw std::runtime_error("SSL_read failed, error code: " + std::to_string(err));
+        }
+    } else {
+        bytes_received = ::recv(sock_, &buffer[0], static_cast<int>(buffer_size), 0);
+
+        if (bytes_received < 0) {
 #if defined(_WIN32) || defined(_WIN64)
-        int error = WSAGetLastError();
-        throw std::runtime_error("Receive failed with error: " + std::to_string(error));
+            int error = WSAGetLastError();
+            throw std::runtime_error("Receive failed with error: " + std::to_string(error));
 #else
-        throw std::runtime_error("Receive failed: " + std::string(strerror(errno)));
+            throw std::runtime_error("Receive failed: " + std::string(strerror(errno)));
 #endif
-    }
+        }
 
-    if (bytes_received == 0) {
-        // Connection closed gracefully by peer
-        return "";
+        if (bytes_received == 0) {
+            return "";
+        }
     }
 
     buffer.resize(bytes_received);
@@ -139,6 +192,11 @@ std::string Socket::receive(size_t buffer_size) {
 }
 
 void Socket::close_socket() {
+    if (ssl_) {
+        SSL_shutdown(ssl_);
+        SSL_free(ssl_);
+        ssl_ = nullptr;
+    }
     if (sock_ != INVALID_SOCK) {
         closesocket(sock_);
         sock_ = INVALID_SOCK;

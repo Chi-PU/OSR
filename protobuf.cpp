@@ -31,6 +31,14 @@ std::string buildChoiceRequest(int user_id, int choice, int scenario_id) {
     return msg.SerializeAsString();
 }
 
+std::string buildTokenAuthRequest(const std::string& jwt_token) {
+    osr::ClientMessage msg;
+    msg.set_type(osr::TOKEN_AUTH);
+    auto* req = msg.mutable_token_auth();
+    req->set_jwt_token(jwt_token);
+    return msg.SerializeAsString();
+}
+
 osr::ServerResponse parseResponse(const std::string& data) {
     osr::ServerResponse resp;
     resp.ParseFromString(data);

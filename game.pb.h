@@ -61,6 +61,9 @@ extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
 class ServerResponse;
 struct ServerResponseDefaultTypeInternal;
 extern ServerResponseDefaultTypeInternal _ServerResponse_default_instance_;
+class TokenAuthRequest;
+struct TokenAuthRequestDefaultTypeInternal;
+extern TokenAuthRequestDefaultTypeInternal _TokenAuthRequest_default_instance_;
 }  // namespace osr
 PROTOBUF_NAMESPACE_OPEN
 template<> ::osr::ClientMessage* Arena::CreateMaybeMessage<::osr::ClientMessage>(Arena*);
@@ -68,6 +71,7 @@ template<> ::osr::GachaPullRequest* Arena::CreateMaybeMessage<::osr::GachaPullRe
 template<> ::osr::GameActionRequest* Arena::CreateMaybeMessage<::osr::GameActionRequest>(Arena*);
 template<> ::osr::LoginRequest* Arena::CreateMaybeMessage<::osr::LoginRequest>(Arena*);
 template<> ::osr::ServerResponse* Arena::CreateMaybeMessage<::osr::ServerResponse>(Arena*);
+template<> ::osr::TokenAuthRequest* Arena::CreateMaybeMessage<::osr::TokenAuthRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace osr {
 
@@ -75,12 +79,13 @@ enum MessageType : int {
   LOGIN = 0,
   GACHA_PULL = 1,
   GAME_ACTION = 2,
+  TOKEN_AUTH = 3,
   MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MessageType_IsValid(int value);
 constexpr MessageType MessageType_MIN = LOGIN;
-constexpr MessageType MessageType_MAX = GAME_ACTION;
+constexpr MessageType MessageType_MAX = TOKEN_AUTH;
 constexpr int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageType_descriptor();
@@ -597,6 +602,159 @@ class GameActionRequest final :
 };
 // -------------------------------------------------------------------
 
+class TokenAuthRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.TokenAuthRequest) */ {
+ public:
+  inline TokenAuthRequest() : TokenAuthRequest(nullptr) {}
+  ~TokenAuthRequest() override;
+  explicit PROTOBUF_CONSTEXPR TokenAuthRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TokenAuthRequest(const TokenAuthRequest& from);
+  TokenAuthRequest(TokenAuthRequest&& from) noexcept
+    : TokenAuthRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline TokenAuthRequest& operator=(const TokenAuthRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TokenAuthRequest& operator=(TokenAuthRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TokenAuthRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TokenAuthRequest* internal_default_instance() {
+    return reinterpret_cast<const TokenAuthRequest*>(
+               &_TokenAuthRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(TokenAuthRequest& a, TokenAuthRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TokenAuthRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TokenAuthRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TokenAuthRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TokenAuthRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TokenAuthRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TokenAuthRequest& from) {
+    TokenAuthRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TokenAuthRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "osr.TokenAuthRequest";
+  }
+  protected:
+  explicit TokenAuthRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kJwtTokenFieldNumber = 1,
+  };
+  // string jwt_token = 1;
+  void clear_jwt_token();
+  const std::string& jwt_token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_jwt_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_jwt_token();
+  PROTOBUF_NODISCARD std::string* release_jwt_token();
+  void set_allocated_jwt_token(std::string* jwt_token);
+  private:
+  const std::string& _internal_jwt_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_jwt_token(const std::string& value);
+  std::string* _internal_mutable_jwt_token();
+  public:
+
+  // @@protoc_insertion_point(class_scope:osr.TokenAuthRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr jwt_token_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_game_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ClientMessage final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.ClientMessage) */ {
  public:
@@ -644,6 +802,7 @@ class ClientMessage final :
     kLogin = 2,
     kGachaPull = 3,
     kGameAction = 4,
+    kTokenAuth = 5,
     PAYLOAD_NOT_SET = 0,
   };
 
@@ -652,7 +811,7 @@ class ClientMessage final :
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(ClientMessage& a, ClientMessage& b) {
     a.Swap(&b);
@@ -729,6 +888,7 @@ class ClientMessage final :
     kLoginFieldNumber = 2,
     kGachaPullFieldNumber = 3,
     kGameActionFieldNumber = 4,
+    kTokenAuthFieldNumber = 5,
   };
   // .osr.MessageType type = 1;
   void clear_type();
@@ -793,6 +953,24 @@ class ClientMessage final :
       ::osr::GameActionRequest* game_action);
   ::osr::GameActionRequest* unsafe_arena_release_game_action();
 
+  // .osr.TokenAuthRequest token_auth = 5;
+  bool has_token_auth() const;
+  private:
+  bool _internal_has_token_auth() const;
+  public:
+  void clear_token_auth();
+  const ::osr::TokenAuthRequest& token_auth() const;
+  PROTOBUF_NODISCARD ::osr::TokenAuthRequest* release_token_auth();
+  ::osr::TokenAuthRequest* mutable_token_auth();
+  void set_allocated_token_auth(::osr::TokenAuthRequest* token_auth);
+  private:
+  const ::osr::TokenAuthRequest& _internal_token_auth() const;
+  ::osr::TokenAuthRequest* _internal_mutable_token_auth();
+  public:
+  void unsafe_arena_set_allocated_token_auth(
+      ::osr::TokenAuthRequest* token_auth);
+  ::osr::TokenAuthRequest* unsafe_arena_release_token_auth();
+
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:osr.ClientMessage)
@@ -801,6 +979,7 @@ class ClientMessage final :
   void set_has_login();
   void set_has_gacha_pull();
   void set_has_game_action();
+  void set_has_token_auth();
 
   inline bool has_payload() const;
   inline void clear_has_payload();
@@ -816,6 +995,7 @@ class ClientMessage final :
       ::osr::LoginRequest* login_;
       ::osr::GachaPullRequest* gacha_pull_;
       ::osr::GameActionRequest* game_action_;
+      ::osr::TokenAuthRequest* token_auth_;
     } payload_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     uint32_t _oneof_case_[1];
@@ -874,7 +1054,7 @@ class ServerResponse final :
                &_ServerResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(ServerResponse& a, ServerResponse& b) {
     a.Swap(&b);
@@ -948,6 +1128,7 @@ class ServerResponse final :
 
   enum : int {
     kMessageFieldNumber = 2,
+    kAccessTokenFieldNumber = 4,
     kSuccessFieldNumber = 1,
     kUserIdFieldNumber = 3,
   };
@@ -963,6 +1144,20 @@ class ServerResponse final :
   const std::string& _internal_message() const;
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
   std::string* _internal_mutable_message();
+  public:
+
+  // string access_token = 4;
+  void clear_access_token();
+  const std::string& access_token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_access_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_access_token();
+  PROTOBUF_NODISCARD std::string* release_access_token();
+  void set_allocated_access_token(std::string* access_token);
+  private:
+  const std::string& _internal_access_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_access_token(const std::string& value);
+  std::string* _internal_mutable_access_token();
   public:
 
   // bool success = 1;
@@ -992,6 +1187,7 @@ class ServerResponse final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr access_token_;
     bool success_;
     int32_t user_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1216,6 +1412,60 @@ inline void GameActionRequest::_internal_set_scenario_id(int32_t value) {
 inline void GameActionRequest::set_scenario_id(int32_t value) {
   _internal_set_scenario_id(value);
   // @@protoc_insertion_point(field_set:osr.GameActionRequest.scenario_id)
+}
+
+// -------------------------------------------------------------------
+
+// TokenAuthRequest
+
+// string jwt_token = 1;
+inline void TokenAuthRequest::clear_jwt_token() {
+  _impl_.jwt_token_.ClearToEmpty();
+}
+inline const std::string& TokenAuthRequest::jwt_token() const {
+  // @@protoc_insertion_point(field_get:osr.TokenAuthRequest.jwt_token)
+  return _internal_jwt_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TokenAuthRequest::set_jwt_token(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.jwt_token_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:osr.TokenAuthRequest.jwt_token)
+}
+inline std::string* TokenAuthRequest::mutable_jwt_token() {
+  std::string* _s = _internal_mutable_jwt_token();
+  // @@protoc_insertion_point(field_mutable:osr.TokenAuthRequest.jwt_token)
+  return _s;
+}
+inline const std::string& TokenAuthRequest::_internal_jwt_token() const {
+  return _impl_.jwt_token_.Get();
+}
+inline void TokenAuthRequest::_internal_set_jwt_token(const std::string& value) {
+  
+  _impl_.jwt_token_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TokenAuthRequest::_internal_mutable_jwt_token() {
+  
+  return _impl_.jwt_token_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TokenAuthRequest::release_jwt_token() {
+  // @@protoc_insertion_point(field_release:osr.TokenAuthRequest.jwt_token)
+  return _impl_.jwt_token_.Release();
+}
+inline void TokenAuthRequest::set_allocated_jwt_token(std::string* jwt_token) {
+  if (jwt_token != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.jwt_token_.SetAllocated(jwt_token, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.jwt_token_.IsDefault()) {
+    _impl_.jwt_token_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:osr.TokenAuthRequest.jwt_token)
 }
 
 // -------------------------------------------------------------------
@@ -1464,6 +1714,80 @@ inline ::osr::GameActionRequest* ClientMessage::mutable_game_action() {
   return _msg;
 }
 
+// .osr.TokenAuthRequest token_auth = 5;
+inline bool ClientMessage::_internal_has_token_auth() const {
+  return payload_case() == kTokenAuth;
+}
+inline bool ClientMessage::has_token_auth() const {
+  return _internal_has_token_auth();
+}
+inline void ClientMessage::set_has_token_auth() {
+  _impl_._oneof_case_[0] = kTokenAuth;
+}
+inline void ClientMessage::clear_token_auth() {
+  if (_internal_has_token_auth()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.payload_.token_auth_;
+    }
+    clear_has_payload();
+  }
+}
+inline ::osr::TokenAuthRequest* ClientMessage::release_token_auth() {
+  // @@protoc_insertion_point(field_release:osr.ClientMessage.token_auth)
+  if (_internal_has_token_auth()) {
+    clear_has_payload();
+    ::osr::TokenAuthRequest* temp = _impl_.payload_.token_auth_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.token_auth_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::osr::TokenAuthRequest& ClientMessage::_internal_token_auth() const {
+  return _internal_has_token_auth()
+      ? *_impl_.payload_.token_auth_
+      : reinterpret_cast< ::osr::TokenAuthRequest&>(::osr::_TokenAuthRequest_default_instance_);
+}
+inline const ::osr::TokenAuthRequest& ClientMessage::token_auth() const {
+  // @@protoc_insertion_point(field_get:osr.ClientMessage.token_auth)
+  return _internal_token_auth();
+}
+inline ::osr::TokenAuthRequest* ClientMessage::unsafe_arena_release_token_auth() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:osr.ClientMessage.token_auth)
+  if (_internal_has_token_auth()) {
+    clear_has_payload();
+    ::osr::TokenAuthRequest* temp = _impl_.payload_.token_auth_;
+    _impl_.payload_.token_auth_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ClientMessage::unsafe_arena_set_allocated_token_auth(::osr::TokenAuthRequest* token_auth) {
+  clear_payload();
+  if (token_auth) {
+    set_has_token_auth();
+    _impl_.payload_.token_auth_ = token_auth;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:osr.ClientMessage.token_auth)
+}
+inline ::osr::TokenAuthRequest* ClientMessage::_internal_mutable_token_auth() {
+  if (!_internal_has_token_auth()) {
+    clear_payload();
+    set_has_token_auth();
+    _impl_.payload_.token_auth_ = CreateMaybeMessage< ::osr::TokenAuthRequest >(GetArenaForAllocation());
+  }
+  return _impl_.payload_.token_auth_;
+}
+inline ::osr::TokenAuthRequest* ClientMessage::mutable_token_auth() {
+  ::osr::TokenAuthRequest* _msg = _internal_mutable_token_auth();
+  // @@protoc_insertion_point(field_mutable:osr.ClientMessage.token_auth)
+  return _msg;
+}
+
 inline bool ClientMessage::has_payload() const {
   return payload_case() != PAYLOAD_NOT_SET;
 }
@@ -1567,9 +1891,61 @@ inline void ServerResponse::set_user_id(int32_t value) {
   // @@protoc_insertion_point(field_set:osr.ServerResponse.user_id)
 }
 
+// string access_token = 4;
+inline void ServerResponse::clear_access_token() {
+  _impl_.access_token_.ClearToEmpty();
+}
+inline const std::string& ServerResponse::access_token() const {
+  // @@protoc_insertion_point(field_get:osr.ServerResponse.access_token)
+  return _internal_access_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ServerResponse::set_access_token(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.access_token_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:osr.ServerResponse.access_token)
+}
+inline std::string* ServerResponse::mutable_access_token() {
+  std::string* _s = _internal_mutable_access_token();
+  // @@protoc_insertion_point(field_mutable:osr.ServerResponse.access_token)
+  return _s;
+}
+inline const std::string& ServerResponse::_internal_access_token() const {
+  return _impl_.access_token_.Get();
+}
+inline void ServerResponse::_internal_set_access_token(const std::string& value) {
+  
+  _impl_.access_token_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ServerResponse::_internal_mutable_access_token() {
+  
+  return _impl_.access_token_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ServerResponse::release_access_token() {
+  // @@protoc_insertion_point(field_release:osr.ServerResponse.access_token)
+  return _impl_.access_token_.Release();
+}
+inline void ServerResponse::set_allocated_access_token(std::string* access_token) {
+  if (access_token != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.access_token_.SetAllocated(access_token, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.access_token_.IsDefault()) {
+    _impl_.access_token_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:osr.ServerResponse.access_token)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

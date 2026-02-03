@@ -145,6 +145,7 @@
     <ClInclude Include="game.pb.h" />
     <ClInclude Include="message_client.h" />
     <ClInclude Include="socket.h" />
+    <ClInclude Include="ssl.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>

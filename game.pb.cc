@@ -64,6 +64,19 @@ struct GameActionRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GameActionRequestDefaultTypeInternal _GameActionRequest_default_instance_;
+PROTOBUF_CONSTEXPR TokenAuthRequest::TokenAuthRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.jwt_token_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct TokenAuthRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TokenAuthRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TokenAuthRequestDefaultTypeInternal() {}
+  union {
+    TokenAuthRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TokenAuthRequestDefaultTypeInternal _TokenAuthRequest_default_instance_;
 PROTOBUF_CONSTEXPR ClientMessage::ClientMessage(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.type_)*/0
@@ -82,6 +95,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR ServerResponse::ServerResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.access_token_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.success_)*/false
   , /*decltype(_impl_.user_id_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -95,7 +109,7 @@ struct ServerResponseDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ServerResponseDefaultTypeInternal _ServerResponse_default_instance_;
 }  // namespace osr
-static ::_pb::Metadata file_level_metadata_game_2eproto[5];
+static ::_pb::Metadata file_level_metadata_game_2eproto[6];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_game_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_game_2eproto = nullptr;
 
@@ -126,12 +140,20 @@ const uint32_t TableStruct_game_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pro
   PROTOBUF_FIELD_OFFSET(::osr::GameActionRequest, _impl_.choice_),
   PROTOBUF_FIELD_OFFSET(::osr::GameActionRequest, _impl_.scenario_id_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::osr::TokenAuthRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::osr::TokenAuthRequest, _impl_.jwt_token_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::osr::ClientMessage, _internal_metadata_),
   ~0u,  // no _extensions_
   PROTOBUF_FIELD_OFFSET(::osr::ClientMessage, _impl_._oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::osr::ClientMessage, _impl_.type_),
+  ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
@@ -145,19 +167,22 @@ const uint32_t TableStruct_game_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pro
   PROTOBUF_FIELD_OFFSET(::osr::ServerResponse, _impl_.success_),
   PROTOBUF_FIELD_OFFSET(::osr::ServerResponse, _impl_.message_),
   PROTOBUF_FIELD_OFFSET(::osr::ServerResponse, _impl_.user_id_),
+  PROTOBUF_FIELD_OFFSET(::osr::ServerResponse, _impl_.access_token_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::osr::LoginRequest)},
   { 8, -1, -1, sizeof(::osr::GachaPullRequest)},
   { 16, -1, -1, sizeof(::osr::GameActionRequest)},
-  { 25, -1, -1, sizeof(::osr::ClientMessage)},
-  { 36, -1, -1, sizeof(::osr::ServerResponse)},
+  { 25, -1, -1, sizeof(::osr::TokenAuthRequest)},
+  { 32, -1, -1, sizeof(::osr::ClientMessage)},
+  { 44, -1, -1, sizeof(::osr::ServerResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::osr::_LoginRequest_default_instance_._instance,
   &::osr::_GachaPullRequest_default_instance_._instance,
   &::osr::_GameActionRequest_default_instance_._instance,
+  &::osr::_TokenAuthRequest_default_instance_._instance,
   &::osr::_ClientMessage_default_instance_._instance,
   &::osr::_ServerResponse_default_instance_._instance,
 };
@@ -168,21 +193,24 @@ const char descriptor_table_protodef_game_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "llRequest\022\017\n\007user_id\030\001 \001(\005\022\022\n\npull_count"
   "\030\002 \001(\005\"I\n\021GameActionRequest\022\017\n\007user_id\030\001"
   " \001(\005\022\016\n\006choice\030\002 \001(\005\022\023\n\013scenario_id\030\003 \001("
-  "\005\"\272\001\n\rClientMessage\022\036\n\004type\030\001 \001(\0162\020.osr."
-  "MessageType\022\"\n\005login\030\002 \001(\0132\021.osr.LoginRe"
-  "questH\000\022+\n\ngacha_pull\030\003 \001(\0132\025.osr.GachaP"
-  "ullRequestH\000\022-\n\013game_action\030\004 \001(\0132\026.osr."
-  "GameActionRequestH\000B\t\n\007payload\"C\n\016Server"
-  "Response\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001"
-  "(\t\022\017\n\007user_id\030\003 \001(\005*9\n\013MessageType\022\t\n\005LO"
-  "GIN\020\000\022\016\n\nGACHA_PULL\020\001\022\017\n\013GAME_ACTION\020\002b\006"
-  "proto3"
+  "\005\"%\n\020TokenAuthRequest\022\021\n\tjwt_token\030\001 \001(\t"
+  "\"\347\001\n\rClientMessage\022\036\n\004type\030\001 \001(\0162\020.osr.M"
+  "essageType\022\"\n\005login\030\002 \001(\0132\021.osr.LoginReq"
+  "uestH\000\022+\n\ngacha_pull\030\003 \001(\0132\025.osr.GachaPu"
+  "llRequestH\000\022-\n\013game_action\030\004 \001(\0132\026.osr.G"
+  "ameActionRequestH\000\022+\n\ntoken_auth\030\005 \001(\0132\025"
+  ".osr.TokenAuthRequestH\000B\t\n\007payload\"Y\n\016Se"
+  "rverResponse\022\017\n\007success\030\001 \001(\010\022\017\n\007message"
+  "\030\002 \001(\t\022\017\n\007user_id\030\003 \001(\005\022\024\n\014access_token\030"
+  "\004 \001(\t*I\n\013MessageType\022\t\n\005LOGIN\020\000\022\016\n\nGACHA"
+  "_PULL\020\001\022\017\n\013GAME_ACTION\020\002\022\016\n\nTOKEN_AUTH\020\003"
+  "b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_game_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_game_2eproto = {
-    false, false, 526, descriptor_table_protodef_game_2eproto,
+    false, false, 648, descriptor_table_protodef_game_2eproto,
     "game.proto",
-    &descriptor_table_game_2eproto_once, nullptr, 0, 5,
+    &descriptor_table_game_2eproto_once, nullptr, 0, 6,
     schemas, file_default_instances, TableStruct_game_2eproto::offsets,
     file_level_metadata_game_2eproto, file_level_enum_descriptors_game_2eproto,
     file_level_service_descriptors_game_2eproto,
@@ -203,6 +231,7 @@ bool MessageType_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -911,11 +940,215 @@ void GameActionRequest::InternalSwap(GameActionRequest* other) {
 
 // ===================================================================
 
+class TokenAuthRequest::_Internal {
+ public:
+};
+
+TokenAuthRequest::TokenAuthRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:osr.TokenAuthRequest)
+}
+TokenAuthRequest::TokenAuthRequest(const TokenAuthRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  TokenAuthRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.jwt_token_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.jwt_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.jwt_token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_jwt_token().empty()) {
+    _this->_impl_.jwt_token_.Set(from._internal_jwt_token(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:osr.TokenAuthRequest)
+}
+
+inline void TokenAuthRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.jwt_token_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.jwt_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.jwt_token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+TokenAuthRequest::~TokenAuthRequest() {
+  // @@protoc_insertion_point(destructor:osr.TokenAuthRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void TokenAuthRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.jwt_token_.Destroy();
+}
+
+void TokenAuthRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void TokenAuthRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:osr.TokenAuthRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.jwt_token_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TokenAuthRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string jwt_token = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_jwt_token();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "osr.TokenAuthRequest.jwt_token"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* TokenAuthRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:osr.TokenAuthRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string jwt_token = 1;
+  if (!this->_internal_jwt_token().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_jwt_token().data(), static_cast<int>(this->_internal_jwt_token().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "osr.TokenAuthRequest.jwt_token");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_jwt_token(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:osr.TokenAuthRequest)
+  return target;
+}
+
+size_t TokenAuthRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:osr.TokenAuthRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string jwt_token = 1;
+  if (!this->_internal_jwt_token().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_jwt_token());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TokenAuthRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    TokenAuthRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TokenAuthRequest::GetClassData() const { return &_class_data_; }
+
+
+void TokenAuthRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<TokenAuthRequest*>(&to_msg);
+  auto& from = static_cast<const TokenAuthRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:osr.TokenAuthRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_jwt_token().empty()) {
+    _this->_internal_set_jwt_token(from._internal_jwt_token());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TokenAuthRequest::CopyFrom(const TokenAuthRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:osr.TokenAuthRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TokenAuthRequest::IsInitialized() const {
+  return true;
+}
+
+void TokenAuthRequest::InternalSwap(TokenAuthRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.jwt_token_, lhs_arena,
+      &other->_impl_.jwt_token_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TokenAuthRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_game_2eproto_getter, &descriptor_table_game_2eproto_once,
+      file_level_metadata_game_2eproto[3]);
+}
+
+// ===================================================================
+
 class ClientMessage::_Internal {
  public:
   static const ::osr::LoginRequest& login(const ClientMessage* msg);
   static const ::osr::GachaPullRequest& gacha_pull(const ClientMessage* msg);
   static const ::osr::GameActionRequest& game_action(const ClientMessage* msg);
+  static const ::osr::TokenAuthRequest& token_auth(const ClientMessage* msg);
 };
 
 const ::osr::LoginRequest&
@@ -929,6 +1162,10 @@ ClientMessage::_Internal::gacha_pull(const ClientMessage* msg) {
 const ::osr::GameActionRequest&
 ClientMessage::_Internal::game_action(const ClientMessage* msg) {
   return *msg->_impl_.payload_.game_action_;
+}
+const ::osr::TokenAuthRequest&
+ClientMessage::_Internal::token_auth(const ClientMessage* msg) {
+  return *msg->_impl_.payload_.token_auth_;
 }
 void ClientMessage::set_allocated_login(::osr::LoginRequest* login) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
@@ -975,6 +1212,21 @@ void ClientMessage::set_allocated_game_action(::osr::GameActionRequest* game_act
   }
   // @@protoc_insertion_point(field_set_allocated:osr.ClientMessage.game_action)
 }
+void ClientMessage::set_allocated_token_auth(::osr::TokenAuthRequest* token_auth) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  clear_payload();
+  if (token_auth) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(token_auth);
+    if (message_arena != submessage_arena) {
+      token_auth = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, token_auth, submessage_arena);
+    }
+    set_has_token_auth();
+    _impl_.payload_.token_auth_ = token_auth;
+  }
+  // @@protoc_insertion_point(field_set_allocated:osr.ClientMessage.token_auth)
+}
 ClientMessage::ClientMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1007,6 +1259,11 @@ ClientMessage::ClientMessage(const ClientMessage& from)
     case kGameAction: {
       _this->_internal_mutable_game_action()->::osr::GameActionRequest::MergeFrom(
           from._internal_game_action());
+      break;
+    }
+    case kTokenAuth: {
+      _this->_internal_mutable_token_auth()->::osr::TokenAuthRequest::MergeFrom(
+          from._internal_token_auth());
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -1070,6 +1327,12 @@ void ClientMessage::clear_payload() {
       }
       break;
     }
+    case kTokenAuth: {
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.payload_.token_auth_;
+      }
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -1124,6 +1387,14 @@ const char* ClientMessage::_InternalParse(const char* ptr, ::_pbi::ParseContext*
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_game_action(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .osr.TokenAuthRequest token_auth = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_token_auth(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1185,6 +1456,13 @@ uint8_t* ClientMessage::_InternalSerialize(
         _Internal::game_action(this).GetCachedSize(), target, stream);
   }
 
+  // .osr.TokenAuthRequest token_auth = 5;
+  if (_internal_has_token_auth()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(5, _Internal::token_auth(this),
+        _Internal::token_auth(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1229,6 +1507,13 @@ size_t ClientMessage::ByteSizeLong() const {
           *_impl_.payload_.game_action_);
       break;
     }
+    // .osr.TokenAuthRequest token_auth = 5;
+    case kTokenAuth: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.payload_.token_auth_);
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -1270,6 +1555,11 @@ void ClientMessage::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
           from._internal_game_action());
       break;
     }
+    case kTokenAuth: {
+      _this->_internal_mutable_token_auth()->::osr::TokenAuthRequest::MergeFrom(
+          from._internal_token_auth());
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -1299,7 +1589,7 @@ void ClientMessage::InternalSwap(ClientMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ClientMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_game_2eproto_getter, &descriptor_table_game_2eproto_once,
-      file_level_metadata_game_2eproto[3]);
+      file_level_metadata_game_2eproto[4]);
 }
 
 // ===================================================================
@@ -1319,6 +1609,7 @@ ServerResponse::ServerResponse(const ServerResponse& from)
   ServerResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
+    , decltype(_impl_.access_token_){}
     , decltype(_impl_.success_){}
     , decltype(_impl_.user_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -1330,6 +1621,14 @@ ServerResponse::ServerResponse(const ServerResponse& from)
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_message().empty()) {
     _this->_impl_.message_.Set(from._internal_message(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.access_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.access_token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_access_token().empty()) {
+    _this->_impl_.access_token_.Set(from._internal_access_token(), 
       _this->GetArenaForAllocation());
   }
   ::memcpy(&_impl_.success_, &from._impl_.success_,
@@ -1344,6 +1643,7 @@ inline void ServerResponse::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
+    , decltype(_impl_.access_token_){}
     , decltype(_impl_.success_){false}
     , decltype(_impl_.user_id_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -1351,6 +1651,10 @@ inline void ServerResponse::SharedCtor(
   _impl_.message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.access_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.access_token_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -1366,6 +1670,7 @@ ServerResponse::~ServerResponse() {
 inline void ServerResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.message_.Destroy();
+  _impl_.access_token_.Destroy();
 }
 
 void ServerResponse::SetCachedSize(int size) const {
@@ -1379,6 +1684,7 @@ void ServerResponse::Clear() {
   (void) cached_has_bits;
 
   _impl_.message_.ClearToEmpty();
+  _impl_.access_token_.ClearToEmpty();
   ::memset(&_impl_.success_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.user_id_) -
       reinterpret_cast<char*>(&_impl_.success_)) + sizeof(_impl_.user_id_));
@@ -1414,6 +1720,16 @@ const char* ServerResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string access_token = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          auto str = _internal_mutable_access_token();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "osr.ServerResponse.access_token"));
         } else
           goto handle_unusual;
         continue;
@@ -1468,6 +1784,16 @@ uint8_t* ServerResponse::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_user_id(), target);
   }
 
+  // string access_token = 4;
+  if (!this->_internal_access_token().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_access_token().data(), static_cast<int>(this->_internal_access_token().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "osr.ServerResponse.access_token");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_access_token(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1489,6 +1815,13 @@ size_t ServerResponse::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_message());
+  }
+
+  // string access_token = 4;
+  if (!this->_internal_access_token().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_access_token());
   }
 
   // bool success = 1;
@@ -1522,6 +1855,9 @@ void ServerResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   if (!from._internal_message().empty()) {
     _this->_internal_set_message(from._internal_message());
   }
+  if (!from._internal_access_token().empty()) {
+    _this->_internal_set_access_token(from._internal_access_token());
+  }
   if (from._internal_success() != 0) {
     _this->_internal_set_success(from._internal_success());
   }
@@ -1551,6 +1887,10 @@ void ServerResponse::InternalSwap(ServerResponse* other) {
       &_impl_.message_, lhs_arena,
       &other->_impl_.message_, rhs_arena
   );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.access_token_, lhs_arena,
+      &other->_impl_.access_token_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(ServerResponse, _impl_.user_id_)
       + sizeof(ServerResponse::_impl_.user_id_)
@@ -1562,7 +1902,7 @@ void ServerResponse::InternalSwap(ServerResponse* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ServerResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_game_2eproto_getter, &descriptor_table_game_2eproto_once,
-      file_level_metadata_game_2eproto[4]);
+      file_level_metadata_game_2eproto[5]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1579,6 +1919,10 @@ Arena::CreateMaybeMessage< ::osr::GachaPullRequest >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::osr::GameActionRequest*
 Arena::CreateMaybeMessage< ::osr::GameActionRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::osr::GameActionRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::osr::TokenAuthRequest*
+Arena::CreateMaybeMessage< ::osr::TokenAuthRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::osr::TokenAuthRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::osr::ClientMessage*
 Arena::CreateMaybeMessage< ::osr::ClientMessage >(Arena* arena) {

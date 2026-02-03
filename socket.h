@@ -19,6 +19,8 @@ typedef int socket_t;
 #define closesocket close
 #endif
 
+#include <openssl/ssl.h>
+
 class Socket {
 public:
     Socket();
@@ -35,10 +37,15 @@ public:
     void send(const std::string& data);
     std::string receive(size_t buffer_size = 4096);
 
+    // Upgrade connection to TLS using the given SSL_CTX
+    void upgrade_to_tls(SSL_CTX* ctx);
+
     bool is_connected() const { return sock_ != INVALID_SOCK; }
+    bool is_tls() const { return ssl_ != nullptr; }
 
 private:
     socket_t sock_;
+    SSL* ssl_;
 
 #if defined(_WIN32) || defined(_WIN64)
     static int wsa_instance_count_;
