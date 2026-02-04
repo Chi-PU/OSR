@@ -44,29 +44,31 @@ static bool authenticate(ConnectManager& conn) {
         std::cerr << "Session expired: " << resp.message() << std::endl;
     }
 
-    // Fall back to login prompt
-    std::string username, password;
-    std::cout << "Username: ";
-    std::getline(std::cin, username);
-    std::cout << "Password: ";
-    std::getline(std::cin, password);
+    // Fall back to login prompt - loop until successful
+    while (true) {
+        std::string username, password;
+        std::cout << "Username: ";
+        std::getline(std::cin, username);
+        std::cout << "Password: ";
+        std::getline(std::cin, password);
 
-    conn.sendLogin(username, password);
-    std::string raw = conn.receive();
-    osr::ServerResponse resp = proto_helpers::parseResponse(raw);
+        conn.sendLogin(username, password);
+        std::string raw = conn.receive();
+        osr::ServerResponse resp = proto_helpers::parseResponse(raw);
 
-    if (!resp.success()) {
-        std::cerr << "Login failed: " << resp.message() << std::endl;
-        return false;
+        if (!resp.success()) {
+            std::cerr << "Login failed: " << resp.message() << std::endl;
+            continue;
+        }
+
+        std::cout << "Logged in (user_id=" << resp.user_id() << ")" << std::endl;
+
+        // Save token for next session if the server returned one
+        if (!resp.access_token().empty()) {
+            saveToken(resp.access_token());
+        }
+        return true;
     }
-
-    std::cout << "Logged in (user_id=" << resp.user_id() << ")" << std::endl;
-
-    // Save token for next session if the server returned one
-    if (!resp.access_token().empty()) {
-        saveToken(resp.access_token());
-    }
-    return true;
 }
 
 int main() {
