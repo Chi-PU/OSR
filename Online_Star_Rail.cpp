@@ -1,8 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
 
 #include "menu.h"
+#include "shop.h"
+#include "daily_rewards.h"
+#include "character_list.h"
 #include "connect_manager.h"
 #include "game.pb.h"
 
@@ -156,6 +160,46 @@ int main() {
     std::cout << "||Welcome to Online: Star Rail||" << endl;
     std::cout << "==================================" << endl;
     cout << "A education purpose game made to simulate online server interaction." << endl;
-    displayMenu(conn);
+
+    Shop shop(conn);
+    DailyRewards daily(conn);
+    CharacterList characters(conn);
+
+    Menu menu;
+    bool running = true;
+
+    menu.addCommand(make_unique<CallbackCommand>("Shop",
+        [&shop]() { shop.display(); }));
+
+    menu.addCommand(make_unique<CallbackCommand>("Daily",
+        [&daily]() { daily.display(); }));
+
+    menu.addCommand(make_unique<CallbackCommand>("Characters",
+        [&characters]() { characters.display(); }));
+
+    menu.addCommand(make_unique<CallbackCommand>("Wish",
+        [&conn]() {
+            cout << "Making a wish..." << endl;
+            conn.sendWishPull(0, 1);
+        }));
+
+    menu.addCommand(make_unique<CallbackCommand>("Bag",
+        [&conn]() {
+            cout << "Bag feature coming soon!" << endl;
+            conn.sendChoice(0, 5, 5);
+        }));
+
+    menu.addCommand(make_unique<CallbackCommand>("Party",
+        [&conn]() {
+            cout << "Party feature coming soon!" << endl;
+            conn.sendChoice(0, 6, 6);
+        }));
+
+    menu.addCommand(make_unique<ExitCommand>(running));
+
+    while (running) {
+        menu.display();
+    }
+
     return 0;
 }

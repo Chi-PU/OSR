@@ -1,22 +1,17 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <iostream>
+#include "command.h"
 #include <vector>
-#include <string>
-#include <iomanip>
-using namespace std;
-class ConnectManager;
+#include <memory>
 
-struct ShardBundle {
-    string name;
-    double price;
-    int shardAmount;
-    string bonus;
+class Menu {
+private:
+    std::vector<std::unique_ptr<Command>> commands;
+
+public:
+    void addCommand(std::unique_ptr<Command> command);
+    void display();
 };
-void displayMenu(ConnectManager& conn);
-void displayShop();
-void displayDaily();
-void displayCharacters();
 
-#endif // !MENU_H
+#endif

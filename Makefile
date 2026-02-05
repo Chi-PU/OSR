@@ -3,7 +3,8 @@ CXXFLAGS = -std=c++17 -Wall -Wextra
 LDFLAGS  = -lprotobuf -lssl -lcrypto -lpq
 
 SRCS = Online_Star_Rail.cpp socket.cpp connect_manager.cpp protobuf.cpp \
-       game.pb.cc auth.cpp characters.cpp menu.cpp data.cpp ssl.cpp
+       game.pb.cc auth.cpp characters.cpp menu.cpp data.cpp ssl.cpp \
+       command.cpp shop.cpp daily_rewards.cpp character_list.cpp
 OBJS = $(SRCS:.cpp=.o)
 OBJS := $(OBJS:.cc=.o)
 TARGET = osr_client

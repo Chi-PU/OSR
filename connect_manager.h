@@ -35,6 +35,7 @@ public:
 	void sendChoice(int user_id, int choice, int scenario_id);
 	void sendTokenAuth(const std::string& jwt_token);
 	void sendShopRequest(int user_id, int item_id, int quantity);
+	void sendPurchase(int user_id, int bundle_id, double price, int shard_amount);
 
 private:
 	SSLContext ssl_ctx_;

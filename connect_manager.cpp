@@ -10,6 +10,7 @@ namespace proto_helpers {
     std::string buildTokenAuthRequest(const std::string& jwt_token);
     std::string buildSignupRequest(const std::string& username, const std::string& password);
     std::string buildShopRequest(int user_id, int item_id, int quantity);
+    std::string buildPurchaseRequest(int user_id, int bundle_id, double price, int shard_amount);
 }
 
 ConnectManager::ConnectManager(const std::string& server_ip, int port,
@@ -89,5 +90,10 @@ void ConnectManager::sendSignup(const std::string& username, const std::string& 
 
 void ConnectManager::sendShopRequest(int user_id, int item_id, int quantity) {
     std::string data = proto_helpers::buildShopRequest(user_id, item_id, quantity);
+    sendRaw(data);
+}
+
+void ConnectManager::sendPurchase(int user_id, int bundle_id, double price, int shard_amount) {
+    std::string data = proto_helpers::buildPurchaseRequest(user_id, bundle_id, price, shard_amount);
     sendRaw(data);
 }

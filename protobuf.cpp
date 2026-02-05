@@ -58,6 +58,16 @@ std::string buildShopRequest(int user_id, int item_id, int quantity) {
     return msg.SerializeAsString();
 }
 
+std::string buildPurchaseRequest(int user_id, int bundle_id, double /*price*/, int shard_amount) {
+    osr::ClientMessage msg;
+    msg.set_type(osr::SHOP);
+    auto* req = msg.mutable_shop();
+    req->set_user_id(user_id);
+    req->set_item_id(bundle_id);
+    req->set_quantity(shard_amount);
+    return msg.SerializeAsString();
+}
+
 osr::ServerResponse parseResponse(const std::string& data) {
     osr::ServerResponse resp;
     resp.ParseFromString(data);
