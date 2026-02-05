@@ -49,9 +49,6 @@ namespace osr {
 class ClientMessage;
 struct ClientMessageDefaultTypeInternal;
 extern ClientMessageDefaultTypeInternal _ClientMessage_default_instance_;
-class GachaPullRequest;
-struct GachaPullRequestDefaultTypeInternal;
-extern GachaPullRequestDefaultTypeInternal _GachaPullRequest_default_instance_;
 class GameActionRequest;
 struct GameActionRequestDefaultTypeInternal;
 extern GameActionRequestDefaultTypeInternal _GameActionRequest_default_instance_;
@@ -61,31 +58,44 @@ extern LoginRequestDefaultTypeInternal _LoginRequest_default_instance_;
 class ServerResponse;
 struct ServerResponseDefaultTypeInternal;
 extern ServerResponseDefaultTypeInternal _ServerResponse_default_instance_;
+class ShopRequest;
+struct ShopRequestDefaultTypeInternal;
+extern ShopRequestDefaultTypeInternal _ShopRequest_default_instance_;
+class SignupRequest;
+struct SignupRequestDefaultTypeInternal;
+extern SignupRequestDefaultTypeInternal _SignupRequest_default_instance_;
 class TokenAuthRequest;
 struct TokenAuthRequestDefaultTypeInternal;
 extern TokenAuthRequestDefaultTypeInternal _TokenAuthRequest_default_instance_;
+class WishPullRequest;
+struct WishPullRequestDefaultTypeInternal;
+extern WishPullRequestDefaultTypeInternal _WishPullRequest_default_instance_;
 }  // namespace osr
 PROTOBUF_NAMESPACE_OPEN
 template<> ::osr::ClientMessage* Arena::CreateMaybeMessage<::osr::ClientMessage>(Arena*);
-template<> ::osr::GachaPullRequest* Arena::CreateMaybeMessage<::osr::GachaPullRequest>(Arena*);
 template<> ::osr::GameActionRequest* Arena::CreateMaybeMessage<::osr::GameActionRequest>(Arena*);
 template<> ::osr::LoginRequest* Arena::CreateMaybeMessage<::osr::LoginRequest>(Arena*);
 template<> ::osr::ServerResponse* Arena::CreateMaybeMessage<::osr::ServerResponse>(Arena*);
+template<> ::osr::ShopRequest* Arena::CreateMaybeMessage<::osr::ShopRequest>(Arena*);
+template<> ::osr::SignupRequest* Arena::CreateMaybeMessage<::osr::SignupRequest>(Arena*);
 template<> ::osr::TokenAuthRequest* Arena::CreateMaybeMessage<::osr::TokenAuthRequest>(Arena*);
+template<> ::osr::WishPullRequest* Arena::CreateMaybeMessage<::osr::WishPullRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace osr {
 
 enum MessageType : int {
   LOGIN = 0,
-  GACHA_PULL = 1,
   GAME_ACTION = 2,
   TOKEN_AUTH = 3,
+  SIGNUP = 4,
+  WISH_PULL = 100,
+  SHOP = 120,
   MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MessageType_IsValid(int value);
 constexpr MessageType MessageType_MIN = LOGIN;
-constexpr MessageType MessageType_MAX = TOKEN_AUTH;
+constexpr MessageType MessageType_MAX = SHOP;
 constexpr int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageType_descriptor();
@@ -273,24 +283,24 @@ class LoginRequest final :
 };
 // -------------------------------------------------------------------
 
-class GachaPullRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.GachaPullRequest) */ {
+class WishPullRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.WishPullRequest) */ {
  public:
-  inline GachaPullRequest() : GachaPullRequest(nullptr) {}
-  ~GachaPullRequest() override;
-  explicit PROTOBUF_CONSTEXPR GachaPullRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline WishPullRequest() : WishPullRequest(nullptr) {}
+  ~WishPullRequest() override;
+  explicit PROTOBUF_CONSTEXPR WishPullRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  GachaPullRequest(const GachaPullRequest& from);
-  GachaPullRequest(GachaPullRequest&& from) noexcept
-    : GachaPullRequest() {
+  WishPullRequest(const WishPullRequest& from);
+  WishPullRequest(WishPullRequest&& from) noexcept
+    : WishPullRequest() {
     *this = ::std::move(from);
   }
 
-  inline GachaPullRequest& operator=(const GachaPullRequest& from) {
+  inline WishPullRequest& operator=(const WishPullRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline GachaPullRequest& operator=(GachaPullRequest&& from) noexcept {
+  inline WishPullRequest& operator=(WishPullRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -313,20 +323,20 @@ class GachaPullRequest final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const GachaPullRequest& default_instance() {
+  static const WishPullRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const GachaPullRequest* internal_default_instance() {
-    return reinterpret_cast<const GachaPullRequest*>(
-               &_GachaPullRequest_default_instance_);
+  static inline const WishPullRequest* internal_default_instance() {
+    return reinterpret_cast<const WishPullRequest*>(
+               &_WishPullRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(GachaPullRequest& a, GachaPullRequest& b) {
+  friend void swap(WishPullRequest& a, WishPullRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(GachaPullRequest* other) {
+  inline void Swap(WishPullRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -339,7 +349,7 @@ class GachaPullRequest final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(GachaPullRequest* other) {
+  void UnsafeArenaSwap(WishPullRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -347,14 +357,14 @@ class GachaPullRequest final :
 
   // implements Message ----------------------------------------------
 
-  GachaPullRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GachaPullRequest>(arena);
+  WishPullRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<WishPullRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const GachaPullRequest& from);
+  void CopyFrom(const WishPullRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const GachaPullRequest& from) {
-    GachaPullRequest::MergeImpl(*this, from);
+  void MergeFrom( const WishPullRequest& from) {
+    WishPullRequest::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -372,15 +382,15 @@ class GachaPullRequest final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(GachaPullRequest* other);
+  void InternalSwap(WishPullRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "osr.GachaPullRequest";
+    return "osr.WishPullRequest";
   }
   protected:
-  explicit GachaPullRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit WishPullRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -415,7 +425,7 @@ class GachaPullRequest final :
   void _internal_set_pull_count(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:osr.GachaPullRequest)
+  // @@protoc_insertion_point(class_scope:osr.WishPullRequest)
  private:
   class _Internal;
 
@@ -425,6 +435,176 @@ class GachaPullRequest final :
   struct Impl_ {
     int32_t user_id_;
     int32_t pull_count_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_game_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ShopRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.ShopRequest) */ {
+ public:
+  inline ShopRequest() : ShopRequest(nullptr) {}
+  ~ShopRequest() override;
+  explicit PROTOBUF_CONSTEXPR ShopRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ShopRequest(const ShopRequest& from);
+  ShopRequest(ShopRequest&& from) noexcept
+    : ShopRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline ShopRequest& operator=(const ShopRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ShopRequest& operator=(ShopRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ShopRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ShopRequest* internal_default_instance() {
+    return reinterpret_cast<const ShopRequest*>(
+               &_ShopRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(ShopRequest& a, ShopRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ShopRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ShopRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ShopRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ShopRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ShopRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ShopRequest& from) {
+    ShopRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ShopRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "osr.ShopRequest";
+  }
+  protected:
+  explicit ShopRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUserIdFieldNumber = 1,
+    kItemIdFieldNumber = 2,
+    kQuantityFieldNumber = 3,
+  };
+  // int32 user_id = 1;
+  void clear_user_id();
+  int32_t user_id() const;
+  void set_user_id(int32_t value);
+  private:
+  int32_t _internal_user_id() const;
+  void _internal_set_user_id(int32_t value);
+  public:
+
+  // int32 item_id = 2;
+  void clear_item_id();
+  int32_t item_id() const;
+  void set_item_id(int32_t value);
+  private:
+  int32_t _internal_item_id() const;
+  void _internal_set_item_id(int32_t value);
+  public:
+
+  // int32 quantity = 3;
+  void clear_quantity();
+  int32_t quantity() const;
+  void set_quantity(int32_t value);
+  private:
+  int32_t _internal_quantity() const;
+  void _internal_set_quantity(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:osr.ShopRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t user_id_;
+    int32_t item_id_;
+    int32_t quantity_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -480,7 +660,7 @@ class GameActionRequest final :
                &_GameActionRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(GameActionRequest& a, GameActionRequest& b) {
     a.Swap(&b);
@@ -650,7 +830,7 @@ class TokenAuthRequest final :
                &_TokenAuthRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(TokenAuthRequest& a, TokenAuthRequest& b) {
     a.Swap(&b);
@@ -755,6 +935,175 @@ class TokenAuthRequest final :
 };
 // -------------------------------------------------------------------
 
+class SignupRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.SignupRequest) */ {
+ public:
+  inline SignupRequest() : SignupRequest(nullptr) {}
+  ~SignupRequest() override;
+  explicit PROTOBUF_CONSTEXPR SignupRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SignupRequest(const SignupRequest& from);
+  SignupRequest(SignupRequest&& from) noexcept
+    : SignupRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SignupRequest& operator=(const SignupRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SignupRequest& operator=(SignupRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SignupRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SignupRequest* internal_default_instance() {
+    return reinterpret_cast<const SignupRequest*>(
+               &_SignupRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(SignupRequest& a, SignupRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SignupRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SignupRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SignupRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SignupRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SignupRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SignupRequest& from) {
+    SignupRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SignupRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "osr.SignupRequest";
+  }
+  protected:
+  explicit SignupRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUsernameFieldNumber = 1,
+    kPasswordFieldNumber = 2,
+  };
+  // string username = 1;
+  void clear_username();
+  const std::string& username() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_username(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_username();
+  PROTOBUF_NODISCARD std::string* release_username();
+  void set_allocated_username(std::string* username);
+  private:
+  const std::string& _internal_username() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_username(const std::string& value);
+  std::string* _internal_mutable_username();
+  public:
+
+  // string password = 2;
+  void clear_password();
+  const std::string& password() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_password(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_password();
+  PROTOBUF_NODISCARD std::string* release_password();
+  void set_allocated_password(std::string* password);
+  private:
+  const std::string& _internal_password() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_password(const std::string& value);
+  std::string* _internal_mutable_password();
+  public:
+
+  // @@protoc_insertion_point(class_scope:osr.SignupRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr username_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr password_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_game_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ClientMessage final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:osr.ClientMessage) */ {
  public:
@@ -800,9 +1149,11 @@ class ClientMessage final :
   }
   enum PayloadCase {
     kLogin = 2,
-    kGachaPull = 3,
+    kWishPull = 3,
     kGameAction = 4,
     kTokenAuth = 5,
+    kSignup = 6,
+    kShop = 7,
     PAYLOAD_NOT_SET = 0,
   };
 
@@ -811,7 +1162,7 @@ class ClientMessage final :
                &_ClientMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    6;
 
   friend void swap(ClientMessage& a, ClientMessage& b) {
     a.Swap(&b);
@@ -886,9 +1237,11 @@ class ClientMessage final :
   enum : int {
     kTypeFieldNumber = 1,
     kLoginFieldNumber = 2,
-    kGachaPullFieldNumber = 3,
+    kWishPullFieldNumber = 3,
     kGameActionFieldNumber = 4,
     kTokenAuthFieldNumber = 5,
+    kSignupFieldNumber = 6,
+    kShopFieldNumber = 7,
   };
   // .osr.MessageType type = 1;
   void clear_type();
@@ -917,23 +1270,23 @@ class ClientMessage final :
       ::osr::LoginRequest* login);
   ::osr::LoginRequest* unsafe_arena_release_login();
 
-  // .osr.GachaPullRequest gacha_pull = 3;
-  bool has_gacha_pull() const;
+  // .osr.WishPullRequest wish_pull = 3;
+  bool has_wish_pull() const;
   private:
-  bool _internal_has_gacha_pull() const;
+  bool _internal_has_wish_pull() const;
   public:
-  void clear_gacha_pull();
-  const ::osr::GachaPullRequest& gacha_pull() const;
-  PROTOBUF_NODISCARD ::osr::GachaPullRequest* release_gacha_pull();
-  ::osr::GachaPullRequest* mutable_gacha_pull();
-  void set_allocated_gacha_pull(::osr::GachaPullRequest* gacha_pull);
+  void clear_wish_pull();
+  const ::osr::WishPullRequest& wish_pull() const;
+  PROTOBUF_NODISCARD ::osr::WishPullRequest* release_wish_pull();
+  ::osr::WishPullRequest* mutable_wish_pull();
+  void set_allocated_wish_pull(::osr::WishPullRequest* wish_pull);
   private:
-  const ::osr::GachaPullRequest& _internal_gacha_pull() const;
-  ::osr::GachaPullRequest* _internal_mutable_gacha_pull();
+  const ::osr::WishPullRequest& _internal_wish_pull() const;
+  ::osr::WishPullRequest* _internal_mutable_wish_pull();
   public:
-  void unsafe_arena_set_allocated_gacha_pull(
-      ::osr::GachaPullRequest* gacha_pull);
-  ::osr::GachaPullRequest* unsafe_arena_release_gacha_pull();
+  void unsafe_arena_set_allocated_wish_pull(
+      ::osr::WishPullRequest* wish_pull);
+  ::osr::WishPullRequest* unsafe_arena_release_wish_pull();
 
   // .osr.GameActionRequest game_action = 4;
   bool has_game_action() const;
@@ -971,15 +1324,53 @@ class ClientMessage final :
       ::osr::TokenAuthRequest* token_auth);
   ::osr::TokenAuthRequest* unsafe_arena_release_token_auth();
 
+  // .osr.SignupRequest signup = 6;
+  bool has_signup() const;
+  private:
+  bool _internal_has_signup() const;
+  public:
+  void clear_signup();
+  const ::osr::SignupRequest& signup() const;
+  PROTOBUF_NODISCARD ::osr::SignupRequest* release_signup();
+  ::osr::SignupRequest* mutable_signup();
+  void set_allocated_signup(::osr::SignupRequest* signup);
+  private:
+  const ::osr::SignupRequest& _internal_signup() const;
+  ::osr::SignupRequest* _internal_mutable_signup();
+  public:
+  void unsafe_arena_set_allocated_signup(
+      ::osr::SignupRequest* signup);
+  ::osr::SignupRequest* unsafe_arena_release_signup();
+
+  // .osr.ShopRequest shop = 7;
+  bool has_shop() const;
+  private:
+  bool _internal_has_shop() const;
+  public:
+  void clear_shop();
+  const ::osr::ShopRequest& shop() const;
+  PROTOBUF_NODISCARD ::osr::ShopRequest* release_shop();
+  ::osr::ShopRequest* mutable_shop();
+  void set_allocated_shop(::osr::ShopRequest* shop);
+  private:
+  const ::osr::ShopRequest& _internal_shop() const;
+  ::osr::ShopRequest* _internal_mutable_shop();
+  public:
+  void unsafe_arena_set_allocated_shop(
+      ::osr::ShopRequest* shop);
+  ::osr::ShopRequest* unsafe_arena_release_shop();
+
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:osr.ClientMessage)
  private:
   class _Internal;
   void set_has_login();
-  void set_has_gacha_pull();
+  void set_has_wish_pull();
   void set_has_game_action();
   void set_has_token_auth();
+  void set_has_signup();
+  void set_has_shop();
 
   inline bool has_payload() const;
   inline void clear_has_payload();
@@ -993,9 +1384,11 @@ class ClientMessage final :
       constexpr PayloadUnion() : _constinit_{} {}
         ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized _constinit_;
       ::osr::LoginRequest* login_;
-      ::osr::GachaPullRequest* gacha_pull_;
+      ::osr::WishPullRequest* wish_pull_;
       ::osr::GameActionRequest* game_action_;
       ::osr::TokenAuthRequest* token_auth_;
+      ::osr::SignupRequest* signup_;
+      ::osr::ShopRequest* shop_;
     } payload_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     uint32_t _oneof_case_[1];
@@ -1054,7 +1447,7 @@ class ServerResponse final :
                &_ServerResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    7;
 
   friend void swap(ServerResponse& a, ServerResponse& b) {
     a.Swap(&b);
@@ -1308,46 +1701,110 @@ inline void LoginRequest::set_allocated_password(std::string* password) {
 
 // -------------------------------------------------------------------
 
-// GachaPullRequest
+// WishPullRequest
 
 // int32 user_id = 1;
-inline void GachaPullRequest::clear_user_id() {
+inline void WishPullRequest::clear_user_id() {
   _impl_.user_id_ = 0;
 }
-inline int32_t GachaPullRequest::_internal_user_id() const {
+inline int32_t WishPullRequest::_internal_user_id() const {
   return _impl_.user_id_;
 }
-inline int32_t GachaPullRequest::user_id() const {
-  // @@protoc_insertion_point(field_get:osr.GachaPullRequest.user_id)
+inline int32_t WishPullRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:osr.WishPullRequest.user_id)
   return _internal_user_id();
 }
-inline void GachaPullRequest::_internal_set_user_id(int32_t value) {
+inline void WishPullRequest::_internal_set_user_id(int32_t value) {
   
   _impl_.user_id_ = value;
 }
-inline void GachaPullRequest::set_user_id(int32_t value) {
+inline void WishPullRequest::set_user_id(int32_t value) {
   _internal_set_user_id(value);
-  // @@protoc_insertion_point(field_set:osr.GachaPullRequest.user_id)
+  // @@protoc_insertion_point(field_set:osr.WishPullRequest.user_id)
 }
 
 // int32 pull_count = 2;
-inline void GachaPullRequest::clear_pull_count() {
+inline void WishPullRequest::clear_pull_count() {
   _impl_.pull_count_ = 0;
 }
-inline int32_t GachaPullRequest::_internal_pull_count() const {
+inline int32_t WishPullRequest::_internal_pull_count() const {
   return _impl_.pull_count_;
 }
-inline int32_t GachaPullRequest::pull_count() const {
-  // @@protoc_insertion_point(field_get:osr.GachaPullRequest.pull_count)
+inline int32_t WishPullRequest::pull_count() const {
+  // @@protoc_insertion_point(field_get:osr.WishPullRequest.pull_count)
   return _internal_pull_count();
 }
-inline void GachaPullRequest::_internal_set_pull_count(int32_t value) {
+inline void WishPullRequest::_internal_set_pull_count(int32_t value) {
   
   _impl_.pull_count_ = value;
 }
-inline void GachaPullRequest::set_pull_count(int32_t value) {
+inline void WishPullRequest::set_pull_count(int32_t value) {
   _internal_set_pull_count(value);
-  // @@protoc_insertion_point(field_set:osr.GachaPullRequest.pull_count)
+  // @@protoc_insertion_point(field_set:osr.WishPullRequest.pull_count)
+}
+
+// -------------------------------------------------------------------
+
+// ShopRequest
+
+// int32 user_id = 1;
+inline void ShopRequest::clear_user_id() {
+  _impl_.user_id_ = 0;
+}
+inline int32_t ShopRequest::_internal_user_id() const {
+  return _impl_.user_id_;
+}
+inline int32_t ShopRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:osr.ShopRequest.user_id)
+  return _internal_user_id();
+}
+inline void ShopRequest::_internal_set_user_id(int32_t value) {
+  
+  _impl_.user_id_ = value;
+}
+inline void ShopRequest::set_user_id(int32_t value) {
+  _internal_set_user_id(value);
+  // @@protoc_insertion_point(field_set:osr.ShopRequest.user_id)
+}
+
+// int32 item_id = 2;
+inline void ShopRequest::clear_item_id() {
+  _impl_.item_id_ = 0;
+}
+inline int32_t ShopRequest::_internal_item_id() const {
+  return _impl_.item_id_;
+}
+inline int32_t ShopRequest::item_id() const {
+  // @@protoc_insertion_point(field_get:osr.ShopRequest.item_id)
+  return _internal_item_id();
+}
+inline void ShopRequest::_internal_set_item_id(int32_t value) {
+  
+  _impl_.item_id_ = value;
+}
+inline void ShopRequest::set_item_id(int32_t value) {
+  _internal_set_item_id(value);
+  // @@protoc_insertion_point(field_set:osr.ShopRequest.item_id)
+}
+
+// int32 quantity = 3;
+inline void ShopRequest::clear_quantity() {
+  _impl_.quantity_ = 0;
+}
+inline int32_t ShopRequest::_internal_quantity() const {
+  return _impl_.quantity_;
+}
+inline int32_t ShopRequest::quantity() const {
+  // @@protoc_insertion_point(field_get:osr.ShopRequest.quantity)
+  return _internal_quantity();
+}
+inline void ShopRequest::_internal_set_quantity(int32_t value) {
+  
+  _impl_.quantity_ = value;
+}
+inline void ShopRequest::set_quantity(int32_t value) {
+  _internal_set_quantity(value);
+  // @@protoc_insertion_point(field_set:osr.ShopRequest.quantity)
 }
 
 // -------------------------------------------------------------------
@@ -1470,6 +1927,110 @@ inline void TokenAuthRequest::set_allocated_jwt_token(std::string* jwt_token) {
 
 // -------------------------------------------------------------------
 
+// SignupRequest
+
+// string username = 1;
+inline void SignupRequest::clear_username() {
+  _impl_.username_.ClearToEmpty();
+}
+inline const std::string& SignupRequest::username() const {
+  // @@protoc_insertion_point(field_get:osr.SignupRequest.username)
+  return _internal_username();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SignupRequest::set_username(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.username_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:osr.SignupRequest.username)
+}
+inline std::string* SignupRequest::mutable_username() {
+  std::string* _s = _internal_mutable_username();
+  // @@protoc_insertion_point(field_mutable:osr.SignupRequest.username)
+  return _s;
+}
+inline const std::string& SignupRequest::_internal_username() const {
+  return _impl_.username_.Get();
+}
+inline void SignupRequest::_internal_set_username(const std::string& value) {
+  
+  _impl_.username_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SignupRequest::_internal_mutable_username() {
+  
+  return _impl_.username_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SignupRequest::release_username() {
+  // @@protoc_insertion_point(field_release:osr.SignupRequest.username)
+  return _impl_.username_.Release();
+}
+inline void SignupRequest::set_allocated_username(std::string* username) {
+  if (username != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.username_.SetAllocated(username, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.username_.IsDefault()) {
+    _impl_.username_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:osr.SignupRequest.username)
+}
+
+// string password = 2;
+inline void SignupRequest::clear_password() {
+  _impl_.password_.ClearToEmpty();
+}
+inline const std::string& SignupRequest::password() const {
+  // @@protoc_insertion_point(field_get:osr.SignupRequest.password)
+  return _internal_password();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SignupRequest::set_password(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.password_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:osr.SignupRequest.password)
+}
+inline std::string* SignupRequest::mutable_password() {
+  std::string* _s = _internal_mutable_password();
+  // @@protoc_insertion_point(field_mutable:osr.SignupRequest.password)
+  return _s;
+}
+inline const std::string& SignupRequest::_internal_password() const {
+  return _impl_.password_.Get();
+}
+inline void SignupRequest::_internal_set_password(const std::string& value) {
+  
+  _impl_.password_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SignupRequest::_internal_mutable_password() {
+  
+  return _impl_.password_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SignupRequest::release_password() {
+  // @@protoc_insertion_point(field_release:osr.SignupRequest.password)
+  return _impl_.password_.Release();
+}
+inline void SignupRequest::set_allocated_password(std::string* password) {
+  if (password != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.password_.SetAllocated(password, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.password_.IsDefault()) {
+    _impl_.password_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:osr.SignupRequest.password)
+}
+
+// -------------------------------------------------------------------
+
 // ClientMessage
 
 // .osr.MessageType type = 1;
@@ -1566,77 +2127,77 @@ inline ::osr::LoginRequest* ClientMessage::mutable_login() {
   return _msg;
 }
 
-// .osr.GachaPullRequest gacha_pull = 3;
-inline bool ClientMessage::_internal_has_gacha_pull() const {
-  return payload_case() == kGachaPull;
+// .osr.WishPullRequest wish_pull = 3;
+inline bool ClientMessage::_internal_has_wish_pull() const {
+  return payload_case() == kWishPull;
 }
-inline bool ClientMessage::has_gacha_pull() const {
-  return _internal_has_gacha_pull();
+inline bool ClientMessage::has_wish_pull() const {
+  return _internal_has_wish_pull();
 }
-inline void ClientMessage::set_has_gacha_pull() {
-  _impl_._oneof_case_[0] = kGachaPull;
+inline void ClientMessage::set_has_wish_pull() {
+  _impl_._oneof_case_[0] = kWishPull;
 }
-inline void ClientMessage::clear_gacha_pull() {
-  if (_internal_has_gacha_pull()) {
+inline void ClientMessage::clear_wish_pull() {
+  if (_internal_has_wish_pull()) {
     if (GetArenaForAllocation() == nullptr) {
-      delete _impl_.payload_.gacha_pull_;
+      delete _impl_.payload_.wish_pull_;
     }
     clear_has_payload();
   }
 }
-inline ::osr::GachaPullRequest* ClientMessage::release_gacha_pull() {
-  // @@protoc_insertion_point(field_release:osr.ClientMessage.gacha_pull)
-  if (_internal_has_gacha_pull()) {
+inline ::osr::WishPullRequest* ClientMessage::release_wish_pull() {
+  // @@protoc_insertion_point(field_release:osr.ClientMessage.wish_pull)
+  if (_internal_has_wish_pull()) {
     clear_has_payload();
-    ::osr::GachaPullRequest* temp = _impl_.payload_.gacha_pull_;
+    ::osr::WishPullRequest* temp = _impl_.payload_.wish_pull_;
     if (GetArenaForAllocation() != nullptr) {
       temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
     }
-    _impl_.payload_.gacha_pull_ = nullptr;
+    _impl_.payload_.wish_pull_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline const ::osr::GachaPullRequest& ClientMessage::_internal_gacha_pull() const {
-  return _internal_has_gacha_pull()
-      ? *_impl_.payload_.gacha_pull_
-      : reinterpret_cast< ::osr::GachaPullRequest&>(::osr::_GachaPullRequest_default_instance_);
+inline const ::osr::WishPullRequest& ClientMessage::_internal_wish_pull() const {
+  return _internal_has_wish_pull()
+      ? *_impl_.payload_.wish_pull_
+      : reinterpret_cast< ::osr::WishPullRequest&>(::osr::_WishPullRequest_default_instance_);
 }
-inline const ::osr::GachaPullRequest& ClientMessage::gacha_pull() const {
-  // @@protoc_insertion_point(field_get:osr.ClientMessage.gacha_pull)
-  return _internal_gacha_pull();
+inline const ::osr::WishPullRequest& ClientMessage::wish_pull() const {
+  // @@protoc_insertion_point(field_get:osr.ClientMessage.wish_pull)
+  return _internal_wish_pull();
 }
-inline ::osr::GachaPullRequest* ClientMessage::unsafe_arena_release_gacha_pull() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:osr.ClientMessage.gacha_pull)
-  if (_internal_has_gacha_pull()) {
+inline ::osr::WishPullRequest* ClientMessage::unsafe_arena_release_wish_pull() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:osr.ClientMessage.wish_pull)
+  if (_internal_has_wish_pull()) {
     clear_has_payload();
-    ::osr::GachaPullRequest* temp = _impl_.payload_.gacha_pull_;
-    _impl_.payload_.gacha_pull_ = nullptr;
+    ::osr::WishPullRequest* temp = _impl_.payload_.wish_pull_;
+    _impl_.payload_.wish_pull_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline void ClientMessage::unsafe_arena_set_allocated_gacha_pull(::osr::GachaPullRequest* gacha_pull) {
+inline void ClientMessage::unsafe_arena_set_allocated_wish_pull(::osr::WishPullRequest* wish_pull) {
   clear_payload();
-  if (gacha_pull) {
-    set_has_gacha_pull();
-    _impl_.payload_.gacha_pull_ = gacha_pull;
+  if (wish_pull) {
+    set_has_wish_pull();
+    _impl_.payload_.wish_pull_ = wish_pull;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:osr.ClientMessage.gacha_pull)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:osr.ClientMessage.wish_pull)
 }
-inline ::osr::GachaPullRequest* ClientMessage::_internal_mutable_gacha_pull() {
-  if (!_internal_has_gacha_pull()) {
+inline ::osr::WishPullRequest* ClientMessage::_internal_mutable_wish_pull() {
+  if (!_internal_has_wish_pull()) {
     clear_payload();
-    set_has_gacha_pull();
-    _impl_.payload_.gacha_pull_ = CreateMaybeMessage< ::osr::GachaPullRequest >(GetArenaForAllocation());
+    set_has_wish_pull();
+    _impl_.payload_.wish_pull_ = CreateMaybeMessage< ::osr::WishPullRequest >(GetArenaForAllocation());
   }
-  return _impl_.payload_.gacha_pull_;
+  return _impl_.payload_.wish_pull_;
 }
-inline ::osr::GachaPullRequest* ClientMessage::mutable_gacha_pull() {
-  ::osr::GachaPullRequest* _msg = _internal_mutable_gacha_pull();
-  // @@protoc_insertion_point(field_mutable:osr.ClientMessage.gacha_pull)
+inline ::osr::WishPullRequest* ClientMessage::mutable_wish_pull() {
+  ::osr::WishPullRequest* _msg = _internal_mutable_wish_pull();
+  // @@protoc_insertion_point(field_mutable:osr.ClientMessage.wish_pull)
   return _msg;
 }
 
@@ -1785,6 +2346,154 @@ inline ::osr::TokenAuthRequest* ClientMessage::_internal_mutable_token_auth() {
 inline ::osr::TokenAuthRequest* ClientMessage::mutable_token_auth() {
   ::osr::TokenAuthRequest* _msg = _internal_mutable_token_auth();
   // @@protoc_insertion_point(field_mutable:osr.ClientMessage.token_auth)
+  return _msg;
+}
+
+// .osr.SignupRequest signup = 6;
+inline bool ClientMessage::_internal_has_signup() const {
+  return payload_case() == kSignup;
+}
+inline bool ClientMessage::has_signup() const {
+  return _internal_has_signup();
+}
+inline void ClientMessage::set_has_signup() {
+  _impl_._oneof_case_[0] = kSignup;
+}
+inline void ClientMessage::clear_signup() {
+  if (_internal_has_signup()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.payload_.signup_;
+    }
+    clear_has_payload();
+  }
+}
+inline ::osr::SignupRequest* ClientMessage::release_signup() {
+  // @@protoc_insertion_point(field_release:osr.ClientMessage.signup)
+  if (_internal_has_signup()) {
+    clear_has_payload();
+    ::osr::SignupRequest* temp = _impl_.payload_.signup_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.signup_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::osr::SignupRequest& ClientMessage::_internal_signup() const {
+  return _internal_has_signup()
+      ? *_impl_.payload_.signup_
+      : reinterpret_cast< ::osr::SignupRequest&>(::osr::_SignupRequest_default_instance_);
+}
+inline const ::osr::SignupRequest& ClientMessage::signup() const {
+  // @@protoc_insertion_point(field_get:osr.ClientMessage.signup)
+  return _internal_signup();
+}
+inline ::osr::SignupRequest* ClientMessage::unsafe_arena_release_signup() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:osr.ClientMessage.signup)
+  if (_internal_has_signup()) {
+    clear_has_payload();
+    ::osr::SignupRequest* temp = _impl_.payload_.signup_;
+    _impl_.payload_.signup_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ClientMessage::unsafe_arena_set_allocated_signup(::osr::SignupRequest* signup) {
+  clear_payload();
+  if (signup) {
+    set_has_signup();
+    _impl_.payload_.signup_ = signup;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:osr.ClientMessage.signup)
+}
+inline ::osr::SignupRequest* ClientMessage::_internal_mutable_signup() {
+  if (!_internal_has_signup()) {
+    clear_payload();
+    set_has_signup();
+    _impl_.payload_.signup_ = CreateMaybeMessage< ::osr::SignupRequest >(GetArenaForAllocation());
+  }
+  return _impl_.payload_.signup_;
+}
+inline ::osr::SignupRequest* ClientMessage::mutable_signup() {
+  ::osr::SignupRequest* _msg = _internal_mutable_signup();
+  // @@protoc_insertion_point(field_mutable:osr.ClientMessage.signup)
+  return _msg;
+}
+
+// .osr.ShopRequest shop = 7;
+inline bool ClientMessage::_internal_has_shop() const {
+  return payload_case() == kShop;
+}
+inline bool ClientMessage::has_shop() const {
+  return _internal_has_shop();
+}
+inline void ClientMessage::set_has_shop() {
+  _impl_._oneof_case_[0] = kShop;
+}
+inline void ClientMessage::clear_shop() {
+  if (_internal_has_shop()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.payload_.shop_;
+    }
+    clear_has_payload();
+  }
+}
+inline ::osr::ShopRequest* ClientMessage::release_shop() {
+  // @@protoc_insertion_point(field_release:osr.ClientMessage.shop)
+  if (_internal_has_shop()) {
+    clear_has_payload();
+    ::osr::ShopRequest* temp = _impl_.payload_.shop_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.shop_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::osr::ShopRequest& ClientMessage::_internal_shop() const {
+  return _internal_has_shop()
+      ? *_impl_.payload_.shop_
+      : reinterpret_cast< ::osr::ShopRequest&>(::osr::_ShopRequest_default_instance_);
+}
+inline const ::osr::ShopRequest& ClientMessage::shop() const {
+  // @@protoc_insertion_point(field_get:osr.ClientMessage.shop)
+  return _internal_shop();
+}
+inline ::osr::ShopRequest* ClientMessage::unsafe_arena_release_shop() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:osr.ClientMessage.shop)
+  if (_internal_has_shop()) {
+    clear_has_payload();
+    ::osr::ShopRequest* temp = _impl_.payload_.shop_;
+    _impl_.payload_.shop_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void ClientMessage::unsafe_arena_set_allocated_shop(::osr::ShopRequest* shop) {
+  clear_payload();
+  if (shop) {
+    set_has_shop();
+    _impl_.payload_.shop_ = shop;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:osr.ClientMessage.shop)
+}
+inline ::osr::ShopRequest* ClientMessage::_internal_mutable_shop() {
+  if (!_internal_has_shop()) {
+    clear_payload();
+    set_has_shop();
+    _impl_.payload_.shop_ = CreateMaybeMessage< ::osr::ShopRequest >(GetArenaForAllocation());
+  }
+  return _impl_.payload_.shop_;
+}
+inline ::osr::ShopRequest* ClientMessage::mutable_shop() {
+  ::osr::ShopRequest* _msg = _internal_mutable_shop();
+  // @@protoc_insertion_point(field_mutable:osr.ClientMessage.shop)
   return _msg;
 }
 
@@ -1944,6 +2653,10 @@ inline void ServerResponse::set_allocated_access_token(std::string* access_token
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

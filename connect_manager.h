@@ -30,9 +30,11 @@ public:
 	std::string receive();
 
 	void sendLogin(const std::string& username, const std::string& password);
-	void sendGachaPull(int user_id, int pull_count);
+	void sendSignup(const std::string& username, const std::string& password);
+	void sendWishPull(int user_id, int pull_count);
 	void sendChoice(int user_id, int choice, int scenario_id);
 	void sendTokenAuth(const std::string& jwt_token);
+	void sendShopRequest(int user_id, int item_id, int quantity);
 
 private:
 	SSLContext ssl_ctx_;

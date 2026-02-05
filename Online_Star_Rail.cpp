@@ -44,30 +44,95 @@ static bool authenticate(ConnectManager& conn) {
         std::cerr << "Session expired: " << resp.message() << std::endl;
     }
 
-    // Fall back to login prompt - loop until successful
+    // Show login/signup menu
     while (true) {
-        std::string username, password;
-        std::cout << "Username: ";
-        std::getline(std::cin, username);
-        std::cout << "Password: ";
-        std::getline(std::cin, password);
+        std::cout << "\n1. Login" << std::endl;
+        std::cout << "2. Sign Up" << std::endl;
+        std::cout << "Choose an option: ";
 
-        conn.sendLogin(username, password);
-        std::string raw = conn.receive();
-        osr::ServerResponse resp = proto_helpers::parseResponse(raw);
-
-        if (!resp.success()) {
-            std::cerr << "Login failed: " << resp.message() << std::endl;
+        std::string choice_str;
+        std::getline(std::cin, choice_str);
+        int choice = 0;
+        try {
+            choice = std::stoi(choice_str);
+        } catch (...) {
+            std::cerr << "Invalid option. Please enter 1 or 2." << std::endl;
             continue;
         }
 
-        std::cout << "Logged in (user_id=" << resp.user_id() << ")" << std::endl;
+        if (choice == 1) {
+            // Login
+            while (true) {
+                std::string username, password;
+                std::cout << "Username: ";
+                std::getline(std::cin, username);
+                std::cout << "Password: ";
+                std::getline(std::cin, password);
 
-        // Save token for next session if the server returned one
-        if (!resp.access_token().empty()) {
-            saveToken(resp.access_token());
+                conn.sendLogin(username, password);
+                std::string raw = conn.receive();
+                osr::ServerResponse resp = proto_helpers::parseResponse(raw);
+
+                if (!resp.success()) {
+                    std::cerr << "Login failed: " << resp.message() << std::endl;
+                    std::cout << "Try again? (y/n): ";
+                    std::string retry;
+                    std::getline(std::cin, retry);
+                    if (retry != "y" && retry != "Y") {
+                        break;  // Go back to login/signup menu
+                    }
+                    continue;
+                }
+
+                std::cout << "Logged in (user_id=" << resp.user_id() << ")" << std::endl;
+
+                if (!resp.access_token().empty()) {
+                    saveToken(resp.access_token());
+                }
+                return true;
+            }
+        } else if (choice == 2) {
+            // Sign Up
+            while (true) {
+                std::string username, password, confirm_password;
+                std::cout << "Choose a username: ";
+                std::getline(std::cin, username);
+                std::cout << "Choose a password: ";
+                std::getline(std::cin, password);
+                std::cout << "Confirm password: ";
+                std::getline(std::cin, confirm_password);
+
+                if (password != confirm_password) {
+                    std::cerr << "Passwords do not match. Please try again." << std::endl;
+                    continue;
+                }
+
+                conn.sendSignup(username, password);
+                std::string raw = conn.receive();
+                osr::ServerResponse resp = proto_helpers::parseResponse(raw);
+
+                if (!resp.success()) {
+                    std::cerr << "Signup failed: " << resp.message() << std::endl;
+                    std::cout << "Try again? (y/n): ";
+                    std::string retry;
+                    std::getline(std::cin, retry);
+                    if (retry != "y" && retry != "Y") {
+                        break;  // Go back to login/signup menu
+                    }
+                    continue;
+                }
+
+                std::cout << "Account created successfully!" << std::endl;
+                std::cout << "Logged in (user_id=" << resp.user_id() << ")" << std::endl;
+
+                if (!resp.access_token().empty()) {
+                    saveToken(resp.access_token());
+                }
+                return true;
+            }
+        } else {
+            std::cerr << "Invalid option. Please enter 1 or 2." << std::endl;
         }
-        return true;
     }
 }
 

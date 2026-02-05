@@ -3,9 +3,11 @@ package osr;
 
 enum MessageType {
   LOGIN = 0;
-  GACHA_PULL = 1;
   GAME_ACTION = 2;
   TOKEN_AUTH = 3;
+  SIGNUP = 4;
+  WISH_PULL = 100;
+  SHOP = 120;
 }
 
 message LoginRequest {
@@ -13,9 +15,15 @@ message LoginRequest {
   string password = 2;
 }
 
-message GachaPullRequest {
+message WishPullRequest {
   int32 user_id = 1;
   int32 pull_count = 2;
+}
+
+message ShopRequest {
+  int32 user_id = 1;
+  int32 item_id = 2;
+  int32 quantity = 3;
 }
 
 message GameActionRequest {
@@ -28,14 +36,21 @@ message TokenAuthRequest {
   string jwt_token = 1;
 }
 
+message SignupRequest {
+  string username = 1;
+  string password = 2;
+}
+
 // Wrapper envelope
 message ClientMessage {
   MessageType type = 1;
   oneof payload {
     LoginRequest login = 2;
-    GachaPullRequest gacha_pull = 3;
+    WishPullRequest wish_pull = 3;
     GameActionRequest game_action = 4;
     TokenAuthRequest token_auth = 5;
+    SignupRequest signup = 6;
+    ShopRequest shop = 7;
   }
 }
 
